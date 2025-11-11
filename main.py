@@ -173,10 +173,10 @@ def midpoint_interactive():
 def demo_bezier_splines():
     """Демонстрация кубических сплайнов Безье"""
     try:
-        from src.Bezier import BezierSpline, ConsoleRenderer, SVGRenderer
+        from src.Bezier import BezierSpline, ConsoleRenderer, SVGRenderer, MatplotlibRenderer
         
         print("\n" + "="*50)
-        print("   КУБИЧЕСКИЕ СПЛАЙНЫ БЕЗЬЕ")
+        print("    КУБИЧЕСКИЕ СПЛАЙНЫ БЕЗЬЕ")
         print("="*50)
         
         spline = BezierSpline()
@@ -186,31 +186,50 @@ def demo_bezier_splines():
         spline.add_segment()
         spline.add_segment()
         
+        # ════════════════════════════════════════════════════
+        #  АВТОМАТИЧЕСКОЕ ОТКРЫТИЕ ОКНА ПРИ ЗАХОДЕ В РЕЖИМ
+        # ════════════════════════════════════════════════════
+        print("\n Автоматически открываю графическое окно...")
+        print("  Закройте окно чтобы перейти к управлению")
+        MatplotlibRenderer.auto_plot(spline)
+        print(" Окно закрыто, переходим к управлению...")
+        
         # Основной цикл взаимодействия
         while True:
+            print("\n" + "="*40)
+            print("         УПРАВЛЕНИЕ СПЛАЙНАМИ")
+            print("="*40)
+            
             print("\n" + ConsoleRenderer.render_ascii(spline))
             ConsoleRenderer.print_info(spline)
             
-            print("\nДОСТУПНЫЕ ДЕЙСТВИЯ:")
-            print("A. Добавить сегмент")
+            print("\n ДОСТУПНЫЕ ДЕЙСТВИЯ:")
+            print("A. Добавить сегмент кривой")
             print("B. Удалить последний сегмент") 
             print("C. Добавить контрольную точку")
             print("D. Удалить контрольную точку")
             print("E. Переместить контрольную точку")
-            print("F. Сохранить в SVG файл")
-            print("G. Вернуться в главное меню")
+            print("F. Показать график (открыть окно)")
+            print("G. Сохранить в SVG файл")
+            print("H. Вернуться в главное меню")
             
-            action = input("\nВыберите действие (A-G): ").strip().upper()
+            action = input("\nВыберите действие (A-H): ").strip().upper()
             
             if action == "A":
                 if spline.add_segment():
                     print(" Сегмент добавлен!")
+                    # Автоматически показываем обновлённый сплайн
+                    print(" Показываю обновлённый сплайн...")
+                    MatplotlibRenderer.auto_plot(spline)
                 else:
                     print(" Ошибка добавления сегмента!")
             
             elif action == "B":
                 if spline.remove_last_segment():
                     print(" Последний сегмент удалён!")
+                    # Автоматически показываем обновлённый сплайн
+                    print(" Показываю обновлённый сплайн...")
+                    MatplotlibRenderer.auto_plot(spline)
                 else:
                     print(" Нечего удалять!")
             
@@ -220,6 +239,9 @@ def demo_bezier_splines():
                     y = float(input("Y координата новой точки: "))
                     spline.add_control_point(x, y)
                     print(" Точка добавлена!")
+                    # Автоматически показываем обновлённый сплайн
+                    print(" Показываю обновлённый сплайн...")
+                    MatplotlibRenderer.auto_plot(spline)
                 except ValueError:
                     print(" Ошибка: введите числа!")
             
@@ -227,7 +249,10 @@ def demo_bezier_splines():
                 try:
                     index = int(input("Индекс точки для удаления: "))
                     if spline.remove_control_point(index):
-                        print("✅ Точка удалена!")
+                        print(" Точка удалена!")
+                        # Автоматически показываем обновлённый сплайн
+                        print(" Показываю обновлённый сплайн...")
+                        MatplotlibRenderer.auto_plot(spline)
                     else:
                         print(" Неверный индекс или нельзя удалить эту точку!")
                 except ValueError:
@@ -240,19 +265,28 @@ def demo_bezier_splines():
                     y = float(input("Новая Y координата: "))
                     if spline.move_control_point(index, x, y):
                         print(" Точка перемещена!")
+                        # Автоматически показываем обновлённый сплайн
+                        print(" Показываю обновлённый сплайн...")
+                        MatplotlibRenderer.auto_plot(spline)
                     else:
                         print(" Неверный индекс!")
                 except ValueError:
                     print(" Ошибка: введите числа!")
             
             elif action == "F":
+                print(" Открываю графическое окно...")
+                print("  Закройте окно чтобы продолжить работу")
+                MatplotlibRenderer.interactive_plot(spline)
+                print(" Окно закрыто")
+            
+            elif action == "G":
                 filename = input("Имя SVG файла (например: bezier.svg): ").strip()
                 if not filename:
                     filename = "bezier_spline.svg"
                 SVGRenderer.save_svg(spline, filename)
                 print(f" Сплайн сохранён в {filename}")
             
-            elif action == "G":
+            elif action == "H":
                 print("Возвращаемся в главное меню...")
                 break
             
@@ -264,6 +298,7 @@ def demo_bezier_splines():
         print("Убедитесь, что файлы находятся в папке src/Bezier/")
     except Exception as e:
         print(f" Неожиданная ошибка: {e}")
+
 
 def main():
     """Главное меню"""

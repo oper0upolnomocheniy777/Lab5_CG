@@ -1,5 +1,7 @@
 import os
 from typing import List, Tuple
+import matplotlib.pyplot as plt
+import numpy as np
 from .spline import BezierSpline
 
 class ConsoleRenderer:
@@ -140,3 +142,143 @@ class SVGRenderer:
             f.write("\n".join(svg_lines))
         
         print(f"Сплайн сохранён в файл: {filename}")
+
+
+class MatplotlibRenderer:
+    """Отрисовка сплайнов в графическом окне с помощью matplotlib"""
+    
+    @staticmethod
+    def interactive_plot(spline: BezierSpline):
+        """Интерактивная отрисовка в отдельном окне"""
+        fig, ax = plt.subplots(figsize=(10, 8))
+        
+        # Настройка внешнего вида
+        ax.set_xlim(0, 1)
+        ax.set_ylim(0, 1)
+        ax.set_title(' Кубические сплайны Безье\n(Закройте окно чтобы продолжить)', fontsize=14)
+        ax.set_aspect('equal')
+        ax.grid(True, alpha=0.3)
+        ax.set_xlabel('X')
+        ax.set_ylabel('Y')
+        
+        # Рисуем кривые Безье
+        curves = spline.get_all_curves()
+        for i, curve in enumerate(curves):
+            if curve:
+                x_vals = [p[0] for p in curve]
+                y_vals = [p[1] for p in curve]
+                ax.plot(x_vals, y_vals, 'b-', linewidth=3, label=f'Кривая {i+1}' if i == 0 else "")
+        
+        # Рисуем контрольные точки
+        control_points = spline.get_control_points()
+        for i, (x, y) in enumerate(control_points):
+            color = 'red' if i % 3 == 0 or i == len(control_points) - 1 else 'green'
+            marker = 'o'
+            size = 80 if color == 'red' else 60
+            label = 'Начало/Конец' if color == 'red' and i == 0 else None
+            ax.scatter(x, y, c=color, s=size, marker=marker, zorder=5, label=label)
+            ax.annotate(f'P{i}\n({x:.2f}, {y:.2f})', (x, y), xytext=(8, 8), 
+                       textcoords='offset points', fontweight='bold', fontsize=9)
+        
+        # Рисуем контрольный многоугольник
+        if control_points:
+            poly_x = [p[0] for p in control_points]
+            poly_y = [p[1] for p in control_points]
+            ax.plot(poly_x, poly_y, 'k--', alpha=0.5, linewidth=1, label='Контрольный многоугольник')
+        
+        ax.legend(loc='upper right')
+        plt.tight_layout()
+        plt.show()
+        
+            
+    @staticmethod
+    def auto_plot(spline: BezierSpline):
+        """Автоматическая отрисовка при входе в режим сплайнов"""
+        fig, ax = plt.subplots(figsize=(10, 8))
+        
+        # Настройка внешнего вида
+        ax.set_xlim(0, 1.2)
+        ax.set_ylim(0, 1)
+        ax.set_title('🎯 Кубические сплайны Безье - Автоматический просмотр', fontsize=14)
+        ax.set_aspect('equal')
+        ax.grid(True, alpha=0.3)
+        ax.set_xlabel('X')
+        ax.set_ylabel('Y')
+        
+        # Рисуем кривые Безье
+        curves = spline.get_all_curves()
+        for i, curve in enumerate(curves):
+            if curve:
+                x_vals = [p[0] for p in curve]
+                y_vals = [p[1] for p in curve]
+                ax.plot(x_vals, y_vals, 'b-', linewidth=3, label=f'Сегмент {i+1}' if i == 0 else "")
+        
+        # Рисуем контрольные точки
+        control_points = spline.get_control_points()
+        for i, (x, y) in enumerate(control_points):
+            color = 'red' if i % 3 == 0 or i == len(control_points) - 1 else 'green'
+            marker = 'o'
+            size = 100 if color == 'red' else 80
+            label = 'Начало/Конец' if color == 'red' and i == 0 else None
+            ax.scatter(x, y, c=color, s=size, marker=marker, zorder=5, label=label, edgecolors='black', linewidth=1.5)
+            ax.annotate(f'P{i}', (x, y), xytext=(10, 10), 
+                       textcoords='offset points', fontweight='bold', fontsize=11,
+                       bbox=dict(boxstyle="round,pad=0.3", facecolor='white', alpha=0.7))
+        
+        # Рисуем контрольный многоугольник
+        if control_points:
+            poly_x = [p[0] for p in control_points]
+            poly_y = [p[1] for p in control_points]
+            ax.plot(poly_x, poly_y, 'k--', alpha=0.5, linewidth=1.5, label='Контрольный многоугольник')
+        
+        # Добавляем информационную панель
+        info_text = f'Сегментов: {len(curves)}\nТочек: {len(control_points)}'
+        ax.text(0.02, 0.98, info_text, transform=ax.transAxes, fontsize=12,
+                verticalalignment='top', bbox=dict(boxstyle="round", facecolor='wheat', alpha=0.8))
+        
+        ax.legend(loc='upper right')
+        plt.tight_layout()
+        plt.show()
+
+    @staticmethod
+    def interactive_plot(spline: BezierSpline):
+        """Интерактивная отрисовка по запросу пользователя"""
+        fig, ax = plt.subplots(figsize=(10, 8))
+        
+        # Настройка внешнего вида
+        ax.set_xlim(0, 1.2)
+        ax.set_ylim(0, 1)
+        ax.set_title('🎯 Кубические сплайны Безье - Интерактивный режим', fontsize=14)
+        ax.set_aspect('equal')
+        ax.grid(True, alpha=0.3)
+        ax.set_xlabel('X')
+        ax.set_ylabel('Y')
+        
+        # Рисуем кривые Безье
+        curves = spline.get_all_curves()
+        for i, curve in enumerate(curves):
+            if curve:
+                x_vals = [p[0] for p in curve]
+                y_vals = [p[1] for p in curve]
+                ax.plot(x_vals, y_vals, 'b-', linewidth=3, label=f'Кривая {i+1}' if i == 0 else "")
+        
+        # Рисуем контрольные точки
+        control_points = spline.get_control_points()
+        for i, (x, y) in enumerate(control_points):
+            color = 'red' if i % 3 == 0 or i == len(control_points) - 1 else 'green'
+            marker = 'o'
+            size = 80 if color == 'red' else 60
+            label = 'Начало/Конец' if color == 'red' and i == 0 else None
+            ax.scatter(x, y, c=color, s=size, marker=marker, zorder=5, label=label)
+            ax.annotate(f'P{i}\n({x:.2f}, {y:.2f})', (x, y), xytext=(8, 8), 
+                       textcoords='offset points', fontweight='bold', fontsize=9)
+        
+        # Рисуем контрольный многоугольник
+        if control_points:
+            poly_x = [p[0] for p in control_points]
+            poly_y = [p[1] for p in control_points]
+            ax.plot(poly_x, poly_y, 'k--', alpha=0.5, linewidth=1, label='Контрольный многоугольник')
+        
+        ax.legend(loc='upper right')
+        plt.tight_layout()
+        plt.show()
