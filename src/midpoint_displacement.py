@@ -1,5 +1,6 @@
 """
 Алгоритм Midpoint Displacement для генерации горного массива
+Улучшенная цветовая схема
 """
 
 import random
@@ -129,13 +130,128 @@ class MidpointDisplacement:
         
         return grid
 
-def create_turtle_screen(width=800, height=400, title="Turtle Graphics"):
-    """Создает и настраивает экран turtle"""
-    screen = turtle.Screen()
-    screen.setup(width, height)
-    screen.title(title)
-    screen.bgcolor("white")
-    return screen
+def get_terrain_color_enhanced(normalized):
+    """
+    Улучшенная цветовая схема для рельефа с плавными переходами
+    
+    Args:
+        normalized (float): нормализованная высота [0, 1]
+        
+    Returns:
+        tuple: цвет RGB (r, g, b)
+    """
+    # Цвета для разных биомов
+    DEEP_OCEAN = (0, 0, 139)        # Темно-синий
+    SHALLOW_OCEAN = (30, 144, 255)  # Голубой
+    BEACH = (238, 214, 175)         # Песочный
+    PLAINS = (34, 139, 34)          # Зеленый
+    FOREST = (0, 100, 0)            # Темно-зеленый
+    HILLS = (139, 115, 85)          # Коричневый
+    MOUNTAINS = (128, 128, 128)     # Серый
+    SNOW = (255, 250, 250)          # Белый
+    
+    # Определяем биомы с плавными переходами
+    if normalized < 0.1:
+        # Глубокий океан
+        return DEEP_OCEAN
+        
+    elif normalized < 0.2:
+        # Переход: глубокий океан -> мелкий океан
+        t = (normalized - 0.1) / 0.1
+        return interpolate_color(DEEP_OCEAN, SHALLOW_OCEAN, t)
+        
+    elif normalized < 0.25:
+        # Мелкий океан
+        return SHALLOW_OCEAN
+        
+    elif normalized < 0.3:
+        # Переход: мелкий океан -> пляж
+        t = (normalized - 0.25) / 0.05
+        return interpolate_color(SHALLOW_OCEAN, BEACH, t)
+        
+    elif normalized < 0.35:
+        # Пляж
+        return BEACH
+        
+    elif normalized < 0.45:
+        # Переход: пляж -> равнины
+        t = (normalized - 0.35) / 0.1
+        return interpolate_color(BEACH, PLAINS, t)
+        
+    elif normalized < 0.55:
+        # Равнины
+        return PLAINS
+        
+    elif normalized < 0.65:
+        # Переход: равнины -> лес
+        t = (normalized - 0.55) / 0.1
+        return interpolate_color(PLAINS, FOREST, t)
+        
+    elif normalized < 0.7:
+        # Лес
+        return FOREST
+        
+    elif normalized < 0.75:
+        # Переход: лес -> холмы
+        t = (normalized - 0.7) / 0.05
+        return interpolate_color(FOREST, HILLS, t)
+        
+    elif normalized < 0.8:
+        # Холмы
+        return HILLS
+        
+    elif normalized < 0.85:
+        # Переход: холмы -> горы
+        t = (normalized - 0.8) / 0.05
+        return interpolate_color(HILLS, MOUNTAINS, t)
+        
+    elif normalized < 0.9:
+        # Горы
+        return MOUNTAINS
+        
+    elif normalized < 0.95:
+        # Переход: горы -> снег
+        t = (normalized - 0.9) / 0.05
+        return interpolate_color(MOUNTAINS, SNOW, t)
+        
+    else:
+        # Снежные вершины
+        return SNOW
+
+def interpolate_color(color1, color2, t):
+    """
+    Линейная интерполяция между двумя цветами
+    
+    Args:
+        color1 (tuple): первый цвет RGB
+        color2 (tuple): второй цвет RGB
+        t (float): коэффициент интерполяции [0, 1]
+        
+    Returns:
+        tuple: интерполированный цвет RGB
+    """
+    r = int(color1[0] + (color2[0] - color1[0]) * t)
+    g = int(color1[1] + (color2[1] - color1[1]) * t)
+    b = int(color1[2] + (color2[2] - color1[2]) * t)
+    return (r, g, b)
+
+def get_terrain_color_simple(normalized):
+    """
+    Упрощенная цветовая схема (оригинальная)
+    """
+    if normalized < 0.3:
+        # Вода
+        return (0, 0, int(normalized * 200 + 55))
+    elif normalized < 0.5:
+        # Равнина
+        return (34, int(normalized * 200 + 55), 34)
+    elif normalized < 0.7:
+        # Холмы
+        return (139, int(normalized * 200), 19)
+    else:
+        # Горы
+        gray = int(normalized * 200)
+        return (gray, gray, gray)
 
 def draw_1d_mountain_safe(points, width=800, height=400, title="Midpoint Displacement - 1D"):
     """
@@ -198,9 +314,16 @@ def draw_1d_mountain_safe(points, width=800, height=400, title="Midpoint Displac
         except:
             pass
 
-def draw_2d_mountain_simple(grid, width=500, height=500, title="Midpoint Displacement - 2D"):
+def draw_2d_mountain_enhanced(grid, width=600, height=600, title="Midpoint Displacement - 2D", color_scheme="enhanced"):
     """
-    Упрощенное рисование 2D массива
+    Рисование 2D массива с улучшенной цветовой схемой
+    
+    Args:
+        grid (list): 2D массив высот
+        width (int): ширина окна
+        height (int): высота окна  
+        title (str): заголовок окна
+        color_scheme (str): схема цветов ("enhanced" или "simple")
     """
     screen = None
     try:
@@ -222,20 +345,19 @@ def draw_2d_mountain_simple(grid, width=500, height=500, title="Midpoint Displac
         min_val = min(min(row) for row in grid)
         max_val = max(max(row) for row in grid)
         
+        print(f"Цветовая схема: {color_scheme}")
+        print(f"Диапазон высот: {min_val:.3f} - {max_val:.3f}")
+        
         for y in range(size):
             for x in range(size):
-                # Нормализуем высоту для цвета
+                # Нормализуем высоту
                 normalized = (grid[y][x] - min_val) / (max_val - min_val + 0.001)
                 
-                # Выбираем цвет
-                if normalized < 0.3:
-                    color = (0, 0, int(normalized * 200 + 55))  # Вода
-                elif normalized < 0.5:
-                    color = (34, int(normalized * 200 + 55), 34)  # Равнина
-                elif normalized < 0.7:
-                    color = (139, int(normalized * 200), 19)  # Холмы
+                # Выбираем цветовую схему
+                if color_scheme == "enhanced":
+                    color = get_terrain_color_enhanced(normalized)
                 else:
-                    color = (int(normalized * 200), int(normalized * 200), int(normalized * 200))  # Горы
+                    color = get_terrain_color_simple(normalized)
                 
                 # Рисуем пиксель
                 t.penup()
@@ -266,26 +388,5 @@ def draw_2d_mountain_simple(grid, width=500, height=500, title="Midpoint Displac
         except:
             pass
 
-def demonstrate_1d_step_by_step():
-    """Пошаговая демонстрация 1D алгоритма"""
-    md = MidpointDisplacement(roughness=0.7, seed=42)
-    
-    print("🎯 ДЕМОНСТРАЦИЯ 1D MIDPOINT DISPLACEMENT")
-    print("=" * 50)
-    
-    for iteration in range(6):
-        points = md.generate_1d(iteration, 0, 0)
-        print(f"\nИтерация {iteration}: {len(points)} точек")
-        
-        # Простая текстовая информация
-        y_values = [p[1] for p in points]
-        print(f"Высоты: от {min(y_values):.2f} до {max(y_values):.2f}")
-        
-        if len(points) <= 10:
-            print("Точки:", " → ".join([f"{y:+.2f}" for x, y in points]))
-        
-        # Рисуем график
-        draw_1d_mountain_safe(points, title=f"1D Midpoint - Итерация {iteration}")
-
-if __name__ == "__main__":
-    demonstrate_1d_step_by_step()
+# Убраны функции, вызывающие циклический импорт
+# demonstrate_color_schemes() и demonstrate_1d_step_by_step() перемещены в examples

@@ -144,14 +144,15 @@ def draw_midpoint_1d():
 
 def draw_midpoint_2d():
     """2D Midpoint Displacement - горный массив"""
-    from src.midpoint_displacement import MidpointDisplacement, draw_2d_mountain_simple
+    from src.midpoint_displacement import MidpointDisplacement, draw_2d_mountain_enhanced
     
     print("Генерация 2D горного массива...")
     md = MidpointDisplacement(roughness=0.8, seed=42)
     grid = md.generate_2d(33, 5, 0, 1)
     print(f"Сгенерирована сетка {len(grid)}x{len(grid[0])}")
     
-    draw_2d_mountain_simple(grid, title="Midpoint Displacement - 2D Горный массив")
+    # Используем улучшенную цветовую схему по умолчанию
+    draw_2d_mountain_enhanced(grid, title="Midpoint Displacement - 2D Горный массив", color_scheme="enhanced")
 
 def midpoint_interactive():
     """Интерактивная демонстрация Midpoint Displacement"""

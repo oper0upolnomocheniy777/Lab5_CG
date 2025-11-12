@@ -54,15 +54,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{e1b7d1f8-9b3c-49b1-8f4f-bfc63a88835d}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
             },
             {
               "$type": "Document",
@@ -72,22 +68,9 @@
               "RelativeDocumentMoniker": "main.py",
               "ToolTip": "C:\\Users\\TROLL2\\Documents\\GitHub\\Lab5_CG\\main.py",
               "RelativeToolTip": "main.py",
-              "ViewState": "AgIAAMkAAAAAAAAAAAAmwNAAAAAKAAAAAAAAAA==",
+              "ViewState": "AgIAALsAAAAAAAAAAAAQwNEAAAAKAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
               "WhenOpened": "2025-11-10T17:24:59.929Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "midpoint_examples.py",
-              "DocumentMoniker": "C:\\Users\\TROLL2\\Documents\\GitHub\\Lab5_CG\\examples\\midpoint_examples.py",
-              "RelativeDocumentMoniker": "examples\\midpoint_examples.py",
-              "ToolTip": "C:\\Users\\TROLL2\\Documents\\GitHub\\Lab5_CG\\examples\\midpoint_examples.py",
-              "RelativeToolTip": "examples\\midpoint_examples.py",
-              "ViewState": "AgIAAEQAAAAAAAAAAAAmwE4AAAAWAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2025-11-10T17:30:18.374Z",
               "EditorCaption": ""
             },
             {
@@ -98,9 +81,22 @@
               "RelativeDocumentMoniker": "src\\midpoint_displacement.py",
               "ToolTip": "C:\\Users\\TROLL2\\Documents\\GitHub\\Lab5_CG\\src\\midpoint_displacement.py",
               "RelativeToolTip": "src\\midpoint_displacement.py",
-              "ViewState": "AgIAABsBAAAAAAAAAAAQwCIBAAAhAAAAAAAAAA==",
+              "ViewState": "AgIAAHEBAAAAAAAAAAAQwIcBAABTAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
               "WhenOpened": "2025-11-10T17:29:43.142Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "midpoint_examples.py",
+              "DocumentMoniker": "C:\\Users\\TROLL2\\Documents\\GitHub\\Lab5_CG\\examples\\midpoint_examples.py",
+              "RelativeDocumentMoniker": "examples\\midpoint_examples.py",
+              "ToolTip": "C:\\Users\\TROLL2\\Documents\\GitHub\\Lab5_CG\\examples\\midpoint_examples.py",
+              "RelativeToolTip": "examples\\midpoint_examples.py",
+              "ViewState": "AgIAAI0AAAAAAAAAAAAQwKMAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
+              "WhenOpened": "2025-11-10T17:30:18.374Z",
               "EditorCaption": ""
             },
             {
@@ -113,8 +109,7 @@
               "RelativeToolTip": "examples\\other_examples.py",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2025-11-10T15:36:56.282Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-10T15:36:56.282Z"
             },
             {
               "$type": "Document",
@@ -126,8 +121,7 @@
               "RelativeToolTip": "src\\l_systems\\__init__.py",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2025-11-10T17:24:41.996Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-10T17:24:41.996Z"
             },
             {
               "$type": "Document",
@@ -139,8 +133,7 @@
               "RelativeToolTip": "src\\l_systems\\l_system.py",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2025-11-10T17:23:59.03Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-10T17:23:59.03Z"
             },
             {
               "$type": "Document",
@@ -152,8 +145,7 @@
               "RelativeToolTip": "src\\l_systems\\__pycache__\\src\\l_systems\\fractals\\koch_curve.txt",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
-              "WhenOpened": "2025-11-10T17:20:57.561Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-10T17:20:57.561Z"
             },
             {
               "$type": "Document",
@@ -165,8 +157,7 @@
               "RelativeToolTip": "src\\l_systems\\fractals\\sierpinski_triangle.txt",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
-              "WhenOpened": "2025-11-10T17:19:22.064Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-10T17:19:22.064Z"
             },
             {
               "$type": "Document",
@@ -178,8 +169,7 @@
               "RelativeToolTip": "src\\l_systems\\fractals\\sierpinski_carpet.txt",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
-              "WhenOpened": "2025-11-10T17:18:56.642Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-10T17:18:56.642Z"
             },
             {
               "$type": "Document",
@@ -191,8 +181,7 @@
               "RelativeToolTip": "src\\l_systems\\fractals\\koch_curve.txt",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
-              "WhenOpened": "2025-11-10T15:31:36.179Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-10T15:31:36.179Z"
             },
             {
               "$type": "Document",
@@ -204,8 +193,11 @@
               "RelativeToolTip": "examples\\l_system_examples.py",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
-              "WhenOpened": "2025-11-10T15:36:13.523Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-10T15:36:13.523Z"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
             }
           ]
         }
